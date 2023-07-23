@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://jvktmccib0ep"]
+
+[ext_resource type="Script" path="res://Platform.gd" id="1_1gs3o"]
+[ext_resource type="Texture2D" uid="uid://cg0mttb2jbxwf" path="res://Sci-fi Platform/Blue/Blue platform 1.png" id="2_mmqot"]
+[ext_resource type="Texture2D" uid="uid://b4ygwaswr3hkq" path="res://Sci-fi Platform/Blue/Blue platform 2.png" id="3_4f87t"]
+[ext_resource type="Texture2D" uid="uid://b7jbl2wj5mwpg" path="res://Sci-fi Platform/Blue/Blue platform 3.png" id="4_pw23w"]
+[ext_resource type="Script" path="res://MissionComplete.gd" id="5_6b6vj"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_le3fi"]
+radius = 27.6744
+height = 960.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_875bd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mmqot")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_4f87t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_pw23w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_4f87t")
+}],
+"loop": true,
+"name": &"glowing_blue_platform",
+"speed": 5.0
+}]
+
+[node name="Area2D" type="Area2D"]
+position = Vector2(969, -68)
+scale = Vector2(0.116, 0.116)
+script = ExtResource("1_1gs3o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(-8.62109, -224.138)
+scale = Vector2(8.6, -0.379297)
+shape = SubResource("CapsuleShape2D_le3fi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_mmqot")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprite2D"]
+sprite_frames = SubResource("SpriteFrames_875bd")
+animation = &"glowing_blue_platform"
+frame = 3
+frame_progress = 0.289786
+
+[node name="MissionComplete" type="RichTextLabel" parent="Sprite2D/AnimatedSprite2D"]
+offset_left = -413.793
+offset_top = 362.069
+offset_right = 329.207
+offset_bottom = 480.069
+theme_override_font_sizes/normal_font_size = 86
+theme_override_font_sizes/bold_font_size = 1
+theme_override_font_sizes/italics_font_size = 1
+text = "Mission Complete"
+fit_content = true
+autowrap_mode = 0
+script = ExtResource("5_6b6vj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
